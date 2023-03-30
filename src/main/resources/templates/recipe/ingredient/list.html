@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List Ingredients</title>
+
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+
+    <script th:src="@{/webjars/jquery/3.6.4/jquery.js}"></script>
+</head>
+<body>
+<!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
+<!--/*@thymesVar id="ingredients" type="java.util.Set<guru.springframework.commands.IngredientCommand>"*/-->
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h1 class="panel-title" style="display:inline;">Ingredients</h1>
+                    <a class="btn btn-primary" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/new'}">New</a>
+                </div>
+                <div class="panel-body">
+
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipe.ingredients)}">
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+
+                            </thead>
+
+                            <tr th:remove="all">
+                                <td>123</td>
+                                <td>Tasty Goodnees 1</td>
+                                <td><a href="#">View</a></td>
+                                <td><a href="#">Update</a></td>
+                                <td><a href="#">Delete</a></td>
+                            </tr>
+
+                            <tr th:remove="all">
+                                <td>12333</td>
+                                <td>Tasty Goodnees 2</td>
+                                <td><a href="#">View</a></td>
+                                <td><a href="#">Update</a></td>
+                                <td><a href="#">Delete</a></td>
+                            </tr>
+
+                            <tr th:each="ingredient : ${recipe.ingredients}">
+                                <td th:text="${ingredient.id}">334</td>
+                                <td th:text="${ingredient.amount}">aas</td>
+                                <td  th:text="${ingredient.uom.getDescription()} + ' ' + ${ingredient.description}">Tasty Goodnees 3</td>
+                                <td><a href="#" 
+                                        th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/show'}"
+                                        class="btn btn-primary">View</a></td>
+                                <td><a href="#" 
+                                        th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/update'}"
+                                        class="btn btn-primary">Update</a></td>
+                                <td><a href="#" 
+                                        th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/delete'}"
+                                        class="btn btn-primary">Delete</a></td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <div class="panel">
+                        <a href="#"
+                            th:href="@{'/recipe/' + ${recipe.id} + '/show'}"
+                            class="btn btn-primary"
+                            style="margin: 10px 0px">Go back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

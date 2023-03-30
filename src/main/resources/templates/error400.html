@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+
+    <script th:src="@{/webjars/jquery/3.6.4/jquery.js}"></script>
+
+    <title>400 ERROR</title>
+</head>
+<body>
+    <div class="container-fluid"   style="margin-top: 5vh">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">
+                        <h1 class="panel-title">
+                            400 Bad Imput Error
+                        </h1>
+
+                        <h4 th:text="${exception}">
+                            For input:
+                        </h4>
+
+                        <div class="panel">
+                            <a href="#"
+                                th:href="@{/}"
+                                class="btn btn-primary"
+                                style="margin: 10px 0px">Go back</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
