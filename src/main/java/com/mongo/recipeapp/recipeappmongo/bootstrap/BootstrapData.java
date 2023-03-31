@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import com.mongo.recipeapp.recipeappmongo.model.UnitOfMeasure;
 import com.mongo.recipeapp.recipeappmongo.repositories.CategoryRepository;
 import com.mongo.recipeapp.recipeappmongo.repositories.RecipeRepository;
 import com.mongo.recipeapp.recipeappmongo.repositories.UnitOfMeasureRepository;
+import com.mongo.recipeapp.recipeappmongo.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +31,9 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
+
+    @Autowired
+    UnitOfMeasureReactiveRepository reactiveRepository;
 
     public BootstrapData(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository,
@@ -41,10 +46,17 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        //loadCategories();
-        //loadUom();
-        //recipeRepository.saveAll(getRecipes());
+        recipeRepository.deleteAll();
+        categoryRepository.deleteAll();
+        unitOfMeasureRepository.deleteAll();
+        
+        loadCategories();
+        loadUom();
+        recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
+        
+        System.err.println("########");
+        System.err.println(reactiveRepository.count().block().toString());
     }
 
     private void loadCategories(){
