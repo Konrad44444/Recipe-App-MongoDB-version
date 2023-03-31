@@ -20,6 +20,8 @@ import com.mongo.recipeapp.recipeappmongo.model.UnitOfMeasure;
 import com.mongo.recipeapp.recipeappmongo.repositories.CategoryRepository;
 import com.mongo.recipeapp.recipeappmongo.repositories.RecipeRepository;
 import com.mongo.recipeapp.recipeappmongo.repositories.UnitOfMeasureRepository;
+import com.mongo.recipeapp.recipeappmongo.repositories.reactive.CategoryReactiveRepository;
+import com.mongo.recipeapp.recipeappmongo.repositories.reactive.RecipeReactiveRepository;
 import com.mongo.recipeapp.recipeappmongo.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +35,13 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
     @Autowired
-    UnitOfMeasureReactiveRepository reactiveRepository;
+    UnitOfMeasureReactiveRepository uomReactiveRepository;
+    
+    @Autowired
+    CategoryReactiveRepository categoryReactiveRepository;
+
+    @Autowired
+    RecipeReactiveRepository reactiveReactiveRepository;
 
     public BootstrapData(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository,
@@ -55,8 +63,12 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
         
-        System.err.println("########");
-        System.err.println(reactiveRepository.count().block().toString());
+        System.err.println("######## UOM");
+        System.err.println(uomReactiveRepository.count().block().toString());
+        System.err.println("######## Category");
+        System.err.println(categoryReactiveRepository.count().block().toString());
+        System.err.println("######## Recipe");
+        System.err.println(reactiveReactiveRepository.count().block().toString());
     }
 
     private void loadCategories(){
