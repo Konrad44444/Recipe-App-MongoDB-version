@@ -81,7 +81,7 @@
 
                                     <select class="form-control" th:field="*{difficulty}">
                                         <option
-                                            th:each="difficultyValue : ${T(com.course.recipe.repipe_project.domain.Difficulty).values()}"
+                                            th:each="difficultyValue : ${T(com.mongo.recipeapp.recipeappmongo.model.Difficulty).values()}"
                                             th:value="${difficultyValue.name()}" 
                                             th:text="${difficultyValue.name()}">Easy</option>
                                             <!-- when value is equal to this in db it is marked as selected option -->

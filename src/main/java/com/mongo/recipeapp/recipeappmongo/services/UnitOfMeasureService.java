@@ -1,9 +1,10 @@
 package com.mongo.recipeapp.recipeappmongo.services;
 
-import java.util.Set;
-
 import com.mongo.recipeapp.recipeappmongo.commands.UnitOfMeasureCommand;
 
+import reactor.core.publisher.Flux;
+
 public interface UnitOfMeasureService {
-    Set<UnitOfMeasureCommand> listAllUoms();
+    //flux means there're many of uoms, before was Set
+    Flux<UnitOfMeasureCommand> listAllUoms();
 }
