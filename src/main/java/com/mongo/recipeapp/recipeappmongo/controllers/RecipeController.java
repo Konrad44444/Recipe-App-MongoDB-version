@@ -16,6 +16,7 @@ import com.mongo.recipeapp.recipeappmongo.exceptions.NotFoundException;
 import com.mongo.recipeapp.recipeappmongo.services.RecipeService;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 
 @Slf4j
@@ -47,10 +48,11 @@ public class RecipeController {
 
     //after adding show recipe
     @PostMapping("/recipe")
-    public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
-        RecipeCommand savedCommand = recipeService.saveRecipeCommand(command).block();
-
-        return "redirect:/recipe/" + savedCommand.getId() + "/show";
+    public Mono<String> saveOrUpdate(@ModelAttribute("recipe") Mono<RecipeCommand> command) {
+        return command.flatMap(
+                recipeCommand -> recipeService.saveRecipeCommand(recipeCommand)
+                        .flatMap(recipeSaved -> Mono.just("redirect:/recipe/" + recipeSaved.getId() + "/show"))
+        );
     }
 
     @GetMapping("recipe/{id}/update")
