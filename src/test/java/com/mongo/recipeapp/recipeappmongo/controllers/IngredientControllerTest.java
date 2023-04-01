@@ -29,6 +29,7 @@ import com.mongo.recipeapp.recipeappmongo.services.UnitOfMeasureService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+
 public class IngredientControllerTest {
     @Mock
     IngredientService ingredientService;
@@ -45,6 +46,8 @@ public class IngredientControllerTest {
         controller = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
+
+    @Deprecated
     @Test
     public void testListIngredients() throws Exception {
         //given
@@ -58,6 +61,8 @@ public class IngredientControllerTest {
         //then
         verify(recipeService, times(1)).findCommandById(anyString());
     }
+
+    @Deprecated
     @Test
     public void testShowIngredient() throws Exception {
         //given
@@ -72,6 +77,8 @@ public class IngredientControllerTest {
                 .andExpect(view().name("recipe/ingredient/show"))
                 .andExpect(model().attributeExists("ingredient"));
     }
+
+    @Deprecated
     @Test
     public void testNewIngredientForm() throws Exception {
         //given
@@ -88,6 +95,8 @@ public class IngredientControllerTest {
                 .andExpect(model().attributeExists("uom_list"));
         verify(recipeService, times(1)).findCommandById(anyString());
     }
+
+    @Deprecated
     @Test
     public void testUpdateIngredientForm() throws Exception {
         //given
@@ -104,6 +113,8 @@ public class IngredientControllerTest {
                 .andExpect(model().attributeExists("ingredient"))
                 .andExpect(model().attributeExists("uom_list"));
     }
+
+    @Deprecated
     @Test
     public void testSaveOrUpdate() throws Exception {
         //given
@@ -123,6 +134,8 @@ public class IngredientControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
     }
+
+    @Deprecated
     @Test
     public void testDeleteIngredient() throws Exception {
         //then
