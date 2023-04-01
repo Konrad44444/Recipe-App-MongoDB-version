@@ -10,7 +10,6 @@ import com.mongo.recipeapp.recipeappmongo.converters.IngredientCommandToIngredie
 import com.mongo.recipeapp.recipeappmongo.converters.IngredientToIngredientCommand;
 import com.mongo.recipeapp.recipeappmongo.model.Ingredient;
 import com.mongo.recipeapp.recipeappmongo.model.Recipe;
-import com.mongo.recipeapp.recipeappmongo.repositories.RecipeRepository;
 import com.mongo.recipeapp.recipeappmongo.repositories.UnitOfMeasureRepository;
 import com.mongo.recipeapp.recipeappmongo.repositories.reactive.RecipeReactiveRepository;
 
