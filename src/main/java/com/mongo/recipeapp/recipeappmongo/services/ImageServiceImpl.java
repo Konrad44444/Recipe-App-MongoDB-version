@@ -7,29 +7,30 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mongo.recipeapp.recipeappmongo.model.Recipe;
-import com.mongo.recipeapp.recipeappmongo.repositories.RecipeRepository;
+import com.mongo.recipeapp.recipeappmongo.repositories.reactive.RecipeReactiveRepository;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
 public class ImageServiceImpl  implements ImageService{
 
-    private final RecipeRepository recipeRepository;
+    private final RecipeReactiveRepository recipeReactiveRepository;
 
 
-    public ImageServiceImpl(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
+    public ImageServiceImpl(RecipeReactiveRepository recipeReactiveRepository) {
+        this.recipeReactiveRepository = recipeReactiveRepository;
     }
 
 
     @Override
     @Transactional
-    public void saveImageFile(String id, MultipartFile file) {
+    public Mono<Void> saveImageFile(String id, MultipartFile file) {
         log.debug("Received a file");
         
         try {
-            Recipe recipe = recipeRepository.findById(id).get();
+            Recipe recipe = recipeReactiveRepository.findById(id).block();
             
             Byte[] byteObjects = new Byte[file.getBytes().length];
 
@@ -39,12 +40,13 @@ public class ImageServiceImpl  implements ImageService{
             
             recipe.setImage(byteObjects);
 
-            recipeRepository.save(recipe);
+            recipeReactiveRepository.save(recipe).block();
         } catch (IOException e) {
             log.error("Error occured", e);
             e.printStackTrace();
         }
         
+        return Mono.empty();
     }
     
 }
