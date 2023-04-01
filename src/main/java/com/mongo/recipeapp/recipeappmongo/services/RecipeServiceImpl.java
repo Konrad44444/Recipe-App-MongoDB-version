@@ -46,9 +46,9 @@ public class RecipeServiceImpl implements RecipeService{
     public Mono<Recipe> findById(String string) {
         Mono<Recipe> recipeMono = recipeReactiveRepository.findById(string);
 
-        if(recipeMono.block() == null) {
-            throw new NotFoundException("Recipe not found! Recipe ID is: " + string.toString());
-        }
+        // if(recipeMono.block() == null) {
+        //     throw new NotFoundException("Recipe not found! Recipe ID is: " + string.toString());
+        // }
     
         return recipeMono;
     }

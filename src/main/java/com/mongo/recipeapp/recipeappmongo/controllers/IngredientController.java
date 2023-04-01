@@ -14,6 +14,8 @@ import com.mongo.recipeapp.recipeappmongo.services.IngredientService;
 import com.mongo.recipeapp.recipeappmongo.services.RecipeService;
 import com.mongo.recipeapp.recipeappmongo.services.UnitOfMeasureService;
 
+import reactor.core.publisher.Flux;
+
 
 @Controller
 public class IngredientController {
@@ -47,8 +49,6 @@ public class IngredientController {
     public String updateRecipeIngredient(@PathVariable String recipeId, @PathVariable String id, Model model) {
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, id));
 
-        model.addAttribute("uom_list", unitOfMeasureService.listAllUoms());
-
         return "/recipe/ingredient/ingredientform";
     }
 
@@ -74,8 +74,6 @@ public class IngredientController {
         //init uom
         ingredientCommand.setUom(new UnitOfMeasureCommand());
 
-        model.addAttribute("uom_list", unitOfMeasureService.listAllUoms());
-
         return "recipe/ingredient/ingredientform";
     }
 
@@ -84,5 +82,10 @@ public class IngredientController {
         ingredientService.deleteIngredientById(recipeId, id);
 
         return "redirect:/recipe/" + recipeId + "/ingredients";
+    }
+
+    @ModelAttribute("uom_list")
+    public Flux<UnitOfMeasureCommand> populateUomList() {
+        return unitOfMeasureService.listAllUoms();
     }
 }
